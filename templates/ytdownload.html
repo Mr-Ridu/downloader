@@ -1,0 +1,65 @@
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>download</title>
+
+
+</head>
+
+<body>
+
+  <div style="height:auto">
+    <img style="width: 100%;height:100%" src="{{link.thumbnail_url}}">
+  </div>
+
+  <h6> Video Title : {{title}}</h6> <br>
+  <h6>Length: {{link.length|intdiv:60}} min {{link.length|mod:60}} sec </h6> <br>
+  
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <th scope="col">Resulation</th>
+        <th scope="col">Type</th>
+        <th scope="col">Size</th>
+        <th scope="col">Download</th>
+        </tr>
+      </thead>
+      <tbody>
+        <hr>
+        {% for p in all %}
+        <tr>
+          <td scope="row">{{p.resolution}} </td>
+          <!-- <td><a href=z"{{ i.video_url }}" style="text-decoration: none;" download="{{ title }}.{{ extension }}" target="_blank" >Download <i class=" fa fa-download"></i></a></td>-->
+          <td scope="row">{{p.mime_type}} </td>
+          <td scope="row">{{p.filesize|intdiv:1000000}}.{{p.filesize|mod:1000000|stringformat:"d"|slice:"2"}} MB </td>
+          <td>
+            <form action="{% url 'newdown' p.itag %}" method="post"> 
+             {% csrf_token %}
+               <input type="submit" class="btn btn-outline-warning" value="Download">
+              <!-- <a href="{% url 'newdown' p.itag %}" class="btn btn-warning" download="{{ title }}" target="_blank"><input type="file" id="dir" name="dir"></a> -->
+
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  {% for message in messages %}
+  <script>
+    swal("", "{{message}}", "{{message.tags}}");
+  </script>
+  {% endfor %}
+</body>
+</html>

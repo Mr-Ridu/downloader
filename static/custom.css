@@ -1,0 +1,17 @@
+/* CSS for Responsive Thumbnail Design */
+.imgfield {
+    display: block;
+    margin: auto;
+    max-width: 100%; /* Ensure the image doesn't exceed its container's width */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle box shadow */
+}
+
+/* Optional: Add additional styling for the container if needed */
+.img-container {
+    width: 100%;
+    max-width: 400px; /* Adjust max-width as needed */
+    margin: auto;
+    overflow: hidden; /* Hide any potential overflow if the image is larger than the container */
+}

@@ -1,0 +1,55 @@
+{% load mathfilters %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <title>download</title>
+  </head>
+
+  <body>
+    <div class="container my-5">
+      <h3 class="mb-4"><b><strong>Playlist Name :-</strong></b> {{ptitle}}</h3>
+      <h4>There are total <b><strong>{{mutvideo}}</strong></b> videos in the playlist</h4>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Thumbnail</th>
+            <th>Title</th>
+            <th>Duration</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pl in plstvideos %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td><img style="height: 60px;width: 100px;" src="{{pl.thumbnail_url}}"></td>
+            <td>{{pl.title}}</td>
+            <td><b>{{pl.length|intdiv:60}}</b> Min <b>{{pl.length|mod:60}}</b> Sec</td>
+            <td>
+              <a class="btn btn-danger"
+                 href="{% url 'playlist_download' %}?video_url={{ pl.watch_url }}"><i class="fa fa-download"></i> Download</a>
+            </td>
+          </tr>
+          {% endfor%}
+        </tbody>
+      </table>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  {% for message in messages %}
+  <script>
+      swal("","{{message}}", "{{message.tags}}");
+  </script>
+  {% endfor %}
+  </body>
+</html>
